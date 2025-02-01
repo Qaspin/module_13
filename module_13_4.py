@@ -25,21 +25,23 @@ async def set_age(message):
 
 @dp.message_handler(state= UserState.age)
 async def set_growth(message, state):
-    await state.update_data(first = message.text)
+    await state.update_data(age = message.text)
     await message.answer('Введите свой рост:')
     await UserState.growth.set()
 
 @dp.message_handler(state= UserState.growth)
 async def set_weight(message, state):
-    await state.update_data(second = message.text)
+    await state.update_data(weight = message.text)
     await message.answer('Введите свой вес:')
     await UserState.weight.set()
 
 @dp.message_handler(state= UserState.weight)
 async def send_calories(message, state):
-    await state.update_data(third = message.text)
+    await state.update_data(growth = message.text)
     data = await state.get_data()
-    await message.answer(f'Ваша норма калорий {10 * int(data["third"]) + 6.25 * int(data["first"]) + 5 * int(data["second"]) + 5}')
+    cal = 10 * int(data["weight"]) + 6.25 * int(data["growth"]) - 5 * int(data["age"]) + 5
+    await message.answer(f'Ваша норма калорий {cal}')
+    await state.finish()
 
 @dp.message_handler()
 async def all_massages(message):
