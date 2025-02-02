@@ -13,8 +13,8 @@ dp = Dispatcher(bot, storage= MemoryStorage())
 kb = ReplyKeyboardMarkup(resize_keyboard = True)
 btn = KeyboardButton(text = 'Рассчитать')
 btn1 = KeyboardButton(text = 'Информация')
-kb.add(btn)
-kb.add(btn1)
+kb.insert(btn)
+kb.insert(btn1)
 
 class UserState(StatesGroup):
     age = State()
